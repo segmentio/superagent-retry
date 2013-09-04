@@ -1,7 +1,10 @@
 
 # superagent-retry
 
-  A retrying layer for a superagent request, adds a `.retry` method to a request to add retrying logic to it. Will retry the request up to count times
+  Extends the node version of [`visionmedia/superagent`][superagent]'s `Request`, adds a `.retry` method to add retrying logic to the request. Calling this will retry the request however many additional times you'd like.
+
+
+  [superagent]: https://github.com/visionmedia/superagent
 
 ## Usage
 
@@ -11,7 +14,7 @@ require('superagent-retry')(superagent');
 
 superagent
   .get('https://segment.io')
-  .retry(2) // retry twice
+  .retry(2) // retry twice before responding
   .end(onresponse);
 
 
@@ -31,8 +34,6 @@ function onresponse (res) {
   * ESOCKETTIMEDOUT
   * superagent client timeouts
   * bad gateway errors (503s)
-
-
 
 
 ## License
