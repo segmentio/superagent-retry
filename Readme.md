@@ -33,7 +33,7 @@ function onresponse (res) {
   * EADDRINFO
   * ESOCKETTIMEDOUT
   * superagent client timeouts
-  * bad gateway errors (503s)
+  * bad gateway errors (502, 503, 504 statuses)
 
 
 ## License
