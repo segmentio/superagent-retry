@@ -10,7 +10,7 @@
 
 ```javascript
 var superagent = require('superagent');
-require('superagent-retry')('superagent');
+require('superagent-retry')(superagent);
 
 superagent
   .get('https://segment.io')
