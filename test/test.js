@@ -1,6 +1,7 @@
 var express     = require('express')
   , agent       = require('superagent')
   , should      = require('should')
+  , assert      = require('assert')
   , http        = require('http');
 
 
@@ -85,6 +86,49 @@ describe('superagent-retry', function () {
           done();
         });
     });
+
+    it('should retry with the same headers', function(done){
+      var url = 'http://localhost:' + port + '/headers';
+      var requests = 0;
+
+      app.get('/headers', function(req, res){
+        if (++requests > 3) return res.send(req.headers);
+      });
+
+      agent
+        .get(url)
+        .set('Accept', 'application/json')
+        .set('X-Foo', 'baz')
+        .timeout(10)
+        .retry(4)
+        .end(function(err, res){
+          assert('baz' == res.body['x-foo']);
+          assert('application/json' == res.body['accept']);
+          done();
+        });
+    })
+
+    it('should re-send data and headers correctly', function(done){
+      var url = 'http://localhost:' + port + '/data';
+      var requests = 0;
+
+      app.post('/data', express.bodyParser(), function(req, res){
+        if (++requests < 3) return;
+        res.send({ body: req.body, headers: req.headers });
+      });
+
+      agent
+        .post(url)
+        .type('json')
+        .send({ data: 1 })
+        .timeout(10)
+        .retry(4)
+        .end(function(err, res){
+          assert(1 == res.body.body.data);
+          assert('application/json' == res.body.headers['content-type']);
+          done();
+        });
+    })
 
     it('should retry on server resets', function (done) {
       var requests = 0;
