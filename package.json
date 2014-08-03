@@ -13,13 +13,13 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "superagent": "~0.17.0"
+    "superagent": "~0.18.0"
   },
   "devDependencies": {
     "mocha": "*",
     "should": "*",
     "express": "~3.3.8",
-    "superagent": "~0.17.0"
+    "superagent": "~0.18.0"
   },
   "main": "lib/index"
 }
