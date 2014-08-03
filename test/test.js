@@ -34,6 +34,7 @@ describe('superagent-retry', function () {
       agent
         .get('http://localhost:' + port)
         .end(function (err, res) {
+          if (err) return done(err);
           res.status.should.eql(503);
         });
 
@@ -42,6 +43,7 @@ describe('superagent-retry', function () {
           .get('http://localhost:' + port)
           .retry(5)
           .end(function (err, res) {
+            if (err) return done(err);
             res.text.should.eql('hello!');
             requests.should.eql(4);
             done(err);
@@ -79,9 +81,10 @@ describe('superagent-retry', function () {
 
       agent
         .get(url)
-        .timeout(1)
+        .timeout(5)
         .retry(20)
         .end(function (err, res) {
+          if (err) return done(err);
           res.text.should.eql('hello!');
           done();
         });
@@ -102,6 +105,7 @@ describe('superagent-retry', function () {
         .timeout(10)
         .retry(4)
         .end(function(err, res){
+          if (err) return done(err);
           assert('baz' == res.body['x-foo']);
           assert('application/json' == res.body['accept']);
           done();
@@ -124,6 +128,7 @@ describe('superagent-retry', function () {
         .timeout(10)
         .retry(4)
         .end(function(err, res){
+          if (err) return done(err);
           assert(1 == res.body.body.data);
           assert('application/json' == res.body.headers['content-type']);
           done();
@@ -151,6 +156,7 @@ describe('superagent-retry', function () {
         .get(url)
         .retry(20)
         .end(function (err, res) {
+          if (err) return done(err);
           res.text.should.eql('hello!');
           done();
         });
