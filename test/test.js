@@ -79,7 +79,7 @@ describe('superagent-retry', function () {
 
       agent
         .get(url)
-        .timeout(1)
+        .timeout(2)
         .retry(20)
         .end(function (err, res) {
           res.text.should.eql('hello!');
@@ -156,4 +156,4 @@ describe('superagent-retry', function () {
         });
     });
   });
-});
+})
