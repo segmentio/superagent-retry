@@ -1,4 +1,10 @@
 
+0.5.1 / 2014-10-08
+==================
+
+ * retain request path
+ * downgrade superagent for backfilling fix
+
 0.5.0 / 2014-10-03
 ==================
 

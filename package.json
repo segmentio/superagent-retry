@@ -1,6 +1,6 @@
 {
   "name": "superagent-retry",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A retrying layer for a superagent request",
   "keywords": [
     "superagent",
