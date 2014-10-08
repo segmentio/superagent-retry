@@ -155,5 +155,25 @@ describe('superagent-retry', function () {
           done();
         });
     });
+
+    it('should retry with the same querystring', function(done){
+      var requests = 0;
+
+      app.get('/qs-data', function(req, res){
+        if (++requests > 10) return res.json({ foo: req.query.foo });
+        res.setTimeout(1);
+      });
+
+      var url = 'http://localhost:' + port + '/qs-data';
+
+      agent
+        .get(url)
+        .retry(20)
+        .query({ foo: 'bar' })
+        .end(function(err, res){
+          res.body.foo.should.eql('bar');
+          done();
+        })
+    });
   });
 })
