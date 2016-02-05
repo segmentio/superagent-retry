@@ -33,6 +33,7 @@ function onresponse (err, res) {
   * ESOCKETTIMEDOUT
   * superagent client timeouts
   * bad gateway errors (502, 503, 504 statuses)
+  * Internal Server Error (500 status)
 
 
 ## License
