@@ -52,6 +52,46 @@ describe('superagent-retry', function () {
     after(function (done) { server.close(done); });
   });
 
+  describe('500 errors', function () {
+    var requests = 0
+      , port = 10410
+      , app = express()
+      , server;
+
+    before(function (done) {
+      app.get('/', function (req, res, next) {
+        requests++;
+        if (requests < 4) res.send(500);
+        else res.send('hello!');
+      });
+
+      server = app.listen(port, done);
+    });
+
+    it('should retry on errors', function (done) {
+
+      agent
+        .get('http://localhost:' + port)
+        .end(function (err, res) {
+          res.status.should.eql(500);
+        });
+
+      setTimeout(function () {
+        agent
+          .get('http://localhost:' + port)
+          .retry(5)
+          .end(function (err, res) {
+            console.log('requests', requests)
+            res.text.should.eql('hello!');
+            requests.should.eql(4);
+            done(err);
+          });
+      }, 100);
+    });
+
+    after(function (done) { server.close(done); });
+  });
+
   describe('resets', function () {
     var requests = 0
       , port = 10410
