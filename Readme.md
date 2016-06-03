@@ -28,6 +28,7 @@ function onresponse (err, res) {
   Currently the retrying logic checks for:
 
   * ECONNRESET
+  * ECONNREFUSED
   * ETIMEDOUT
   * EADDRINFO
   * ESOCKETTIMEDOUT
