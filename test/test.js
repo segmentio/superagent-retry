@@ -196,6 +196,28 @@ describe('superagent-retry', function () {
         });
     });
 
+    it('should retry on server connection refused', function (done) {
+      var url = 'http://localhost:' + (port+1) + '/hello';
+      var request = agent.get(url);
+      var allowedRetries = 10;
+      var allowedTries = allowedRetries + 1;
+      var triesCount = 0
+
+      var oldEnd = request.end;
+      request.end = function(fn) {
+        triesCount++;
+        oldEnd.call(request, fn);
+      };
+
+      request
+        .retry(allowedRetries)
+        .end(function (err, res) {
+          err.code.should.eql('ECONNREFUSED');
+          triesCount.should.eql(allowedTries);
+          done();
+        });
+    });
+
     it('should retry with the same querystring', function(done){
       var requests = 0;
 
