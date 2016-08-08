@@ -11,15 +11,13 @@
     "type": "git",
     "url": "git://github.com/segmentio/superagent-retry.git"
   },
-  "dependencies": {},
-  "peerDependencies": {
-    "superagent": "*"
+  "dependencies": {
+    "superagent": "~0.20.0"
   },
   "devDependencies": {
     "mocha": "*",
     "should": "*",
-    "express": "~3.3.8",
-    "superagent": "~0.20.0"
+    "express": "~3.3.8"
   },
   "main": "lib/index"
 }
