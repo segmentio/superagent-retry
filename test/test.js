@@ -16,6 +16,7 @@ describe('superagent-retry', function () {
   describe('errors', function () {
     var requests = 0
       , port = 10410
+      , success
       , app = express()
       , server;
 
@@ -30,6 +31,13 @@ describe('superagent-retry', function () {
         requests++;
         if (requests < 4) res.send(500);
         else res.send('hello!');
+      });
+
+      app.get('/user-error-with-delay', function (req, res, next) {
+        setTimeout(function () {
+          success = true;
+        }, 500);
+        return res.send(success ? 200 : 500);
       });
 
       server = app.listen(port, done);
@@ -76,6 +84,28 @@ describe('superagent-retry', function () {
           .end(function (err, res) {
             res.text.should.eql('hello!');
             requests.should.eql(4);
+            done(err);
+          });
+      }, 100);
+    });
+
+    it('should wait before retry', function (done) {
+
+      agent
+        .get('http://localhost:' + port + '/user-error-with-delay')
+        .end(function (err, res) {
+          res.status.should.eql(500);
+        });
+
+      setTimeout(function () {
+        agent
+          .get('http://localhost:' + port + '/user-error-with-delay')
+          .retry(5, function (err, res) {
+            return res && res.status === 500;
+          })
+          .delayRetry(600)
+          .end(function (err, res) {
+            res.status.should.eql(200);
             done(err);
           });
       }, 100);
