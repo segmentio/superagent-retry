@@ -25,7 +25,7 @@ function onresponse (err, res) {
 
 You can optionally add a delay to each retry.
 
-```
+```javascript
 superagent
   .get('https://segment.io')
   .retry(2, 500) // retry twice with 0.5 second delay
