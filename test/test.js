@@ -237,5 +237,34 @@ describe('superagent-retry', function () {
           done();
         })
     });
+
+  it('should retry with delay', function (done) {
+    var requests = 0;
+    var millisecs = Date.now();
+    var url = 'http://localhost:' + port + '/timeout';
+
+    app.get('/timeout', function (req, res, next) {
+      requests++;
+      if (requests > 10) res.send('hi!');
+    });
+
+    agent
+      .get(url)
+      .timeout(10)
+      .end(function (err, res) {
+        should.exist(err);
+      });
+
+    agent
+      .get(url)
+      .timeout(2)
+      .retry(10, 20)
+      .end(function (err, res) {
+        millisecs = Date.now() - millisecs;
+        res.text.should.eql('hi!');
+        millisecs.should.above(200);
+        done();
+      });
+    });
   });
 })
