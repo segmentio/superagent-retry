@@ -1,3 +1,7 @@
+# ⚠️ Unmaintained ⚠️
+
+This repository is unmaintained, and this [functionality has been added to superagent core](https://visionmedia.github.io/superagent/#retrying-requests).
+
 # superagent-retry
 
   Extends the node version of [`visionmedia/superagent`][superagent]'s `Request`, adds a `.retry` method to add retrying logic to the request. Calling this will retry the request however many additional times you'd like.
