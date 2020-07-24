@@ -18,7 +18,7 @@
   "devDependencies": {
     "mocha": "*",
     "should": "*",
-    "express": "~3.3.8",
+    "express": "~4.17.1",
     "superagent": "~0.20.0"
   },
   "main": "lib/index"
