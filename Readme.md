@@ -9,6 +9,11 @@ This repository is unmaintained, and this [functionality has been added to super
 
   [superagent]: https://github.com/visionmedia/superagent
 
+
+## Deprecated
+
+Retries are now natively supported by `superagent`: http://visionmedia.github.io/superagent/#retrying-requests.
+
 ## Usage
 
 ```javascript
