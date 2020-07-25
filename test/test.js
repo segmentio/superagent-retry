@@ -81,7 +81,6 @@ describe('superagent-retry', function () {
           .get('http://localhost:' + port)
           .retry(5)
           .end(function (err, res) {
-            console.log('requests', requests)
             res.text.should.eql('hello!');
             requests.should.eql(4);
             done(err);
